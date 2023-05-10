@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Comment;
+use App\Models\Topic;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class CommentPolicy
+class TopicPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class CommentPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Comment $comment): bool
+    public function view(User $user, Topic $topic): bool
     {
         return true;
     }
@@ -35,16 +35,16 @@ class CommentPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Comment $comment): bool
+    public function update(User $user, Topic $topic): bool
     {
-        return $user->id === $comment->user_id;
+        return $user->id === $topic->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Comment $comment): bool
+    public function delete(User $user, Topic $topic): bool
     {
-        return $user->id === $comment->user_id;
+        return $user->id === $topic->user_id;
     }
 }

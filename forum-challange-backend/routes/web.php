@@ -15,15 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::controller(TopicsController::class)->group(function () {
-    Route::get('topics', 'index');
-    Route::post('topic', 'store');
-    Route::get('topic/{id}', 'show');
-    Route::put('topic/{id}', 'update');
-    Route::delete('topic/{id}', 'destroy');
-});
-
-
 // Rotte per la visualizzazione dei topic
 Route::get('/topics', [TopicsController::class, 'index']);
 Route::get('/topics/{topic}', [TopicsController::class, 'show']);
