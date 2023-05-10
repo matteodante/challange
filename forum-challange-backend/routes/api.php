@@ -21,7 +21,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 
 Route::prefix('jwt')->group(function () {
     Route::post('login', [JWTAuthController::class, 'login']);
-    Route::post('user', [JWTAuthController::class, 'user']);
+    Route::get('user', [JWTAuthController::class, 'user']);
     Route::post('register', [JWTAuthController::class, 'register']);
     Route::post('logout', [JWTAuthController::class, 'logout']);
     Route::post('refresh', [JWTAuthController::class, 'refresh']);

@@ -9,7 +9,7 @@ class TopicsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('auth:api')->only('show', 'update', 'destroy');
     }
 
     public function index()
