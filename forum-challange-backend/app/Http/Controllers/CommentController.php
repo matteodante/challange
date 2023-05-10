@@ -12,12 +12,12 @@ class CommentController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Topic $topic, StoreCommentRequest $request)
+    public function store(StoreCommentRequest $request, Topic $topic)
     {
         $validated = $request->validated();
 
         $comment = Comment::create([
-            'text' => $request->title,
+            'text' => $validated['text'],
             'topic_id' => $topic->id,
             'user_id' => auth()->id(),
         ]);
@@ -30,34 +30,32 @@ class CommentController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCommentRequest $request, Comment $comment)
+    public function update(UpdateCommentRequest $request, Topic $topic, Comment $comment)
     {
-        //
+        $validated = $request->validated();
+
+        $comment->text = $validated['text'];
+        $comment->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Comment updated successfully',
+            'topic' => $comment,
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Comment $comment)
+    public function destroy(Topic $topic, Comment $comment)
     {
-        //
+        $comment->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Comment deleted successfully',
+        ]);
     }
 }
