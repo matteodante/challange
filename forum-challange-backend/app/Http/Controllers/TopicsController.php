@@ -7,10 +7,6 @@ use App\Models\Topic;
 
 class TopicsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api')->only('show', 'update', 'destroy');
-    }
 
     public function index()
     {
@@ -36,7 +32,7 @@ class TopicsController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Topic created successfully',
-            'Topic' => $Topic,
+            'topic' => $Topic,
         ]);
     }
 
@@ -45,7 +41,8 @@ class TopicsController extends Controller
         $Topic = Topic::find($id);
         return response()->json([
             'status' => 'success',
-            'Topic' => $Topic,
+            'topic' => $Topic,
+            'comments' => $Topic->comments->cursorPaginate(20),
         ]);
     }
 
@@ -64,7 +61,7 @@ class TopicsController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Topic updated successfully',
-            'Topic' => $Topic,
+            'topic' => $Topic,
         ]);
     }
 
@@ -76,7 +73,7 @@ class TopicsController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Topic deleted successfully',
-            'Topic' => $Topic,
+            'topic' => $Topic,
         ]);
     }
 }

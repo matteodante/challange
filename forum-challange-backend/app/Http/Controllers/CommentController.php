@@ -5,31 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Models\Topic;
 
 class CommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCommentRequest $request)
+    public function store(Topic $topic, StoreCommentRequest $request)
     {
-        //
+        $validated = $request->validated();
+
+        $comment = Comment::create([
+            'text' => $request->title,
+            'topic_id' => $topic->id,
+            'user_id' => auth()->id(),
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Comment created successfully',
+            'comment' => $comment,
+        ]);
     }
 
     /**
