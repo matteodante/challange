@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Topic;
+use App\Models\Comment;
 
 class TopicsController extends Controller
 {
 
     public function index()
     {
-        $Topics = Topic::all();
+        $Topics = Topic::cursorPaginate(20);
         return response()->json([
             'status' => 'success',
-            'Topics' => $Topics,
+            'topics' => $Topics,
         ]);
     }
 
@@ -38,11 +39,11 @@ class TopicsController extends Controller
 
     public function show($id)
     {
-        $Topic = Topic::find($id);
+        $Topic = Topic::findOrFail($id);
         return response()->json([
             'status' => 'success',
             'topic' => $Topic,
-            'comments' => $Topic->comments->cursorPaginate(20),
+            'comments' => Comment::where('topic_id', $Topic->id)->cursorPaginate(20),
         ]);
     }
 
@@ -53,7 +54,7 @@ class TopicsController extends Controller
             'description' => 'required|string|max:255',
         ]);
 
-        $Topic = Topic::find($id);
+        $Topic = Topic::findOrFail($id);
         $Topic->title = $request->title;
         $Topic->description = $request->description;
         $Topic->save();
@@ -67,7 +68,7 @@ class TopicsController extends Controller
 
     public function destroy($id)
     {
-        $Topic = Topic::find($id);
+        $Topic = Topic::findOrFail($id);
         $Topic->delete();
 
         return response()->json([

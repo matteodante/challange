@@ -15,21 +15,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Rotte per la visualizzazione dei topic
-Route::get('/topics', [TopicsController::class, 'index']);
-Route::get('/topics/{topic}', [TopicsController::class, 'show']);
-
-// Rotte per la creazione dei topic e dei commenti (richiede autenticazione)
-Route::middleware('auth')->group(function () {
-    //Rotte topics
-    Route::post('/topics', [TopicsController::class, 'store']);
-    Route::put('/topics/{id}', [TopicsController::class, 'update']);
-    Route::delete('/topics/{id}', [TopicsController::class, 'destroy']);
-
-    //Rotte comments
-    Route::post('/topics/{topic}/comments', [CommentController::class, 'store']);
-    Route::put('/topics/{topic}/comments/{id}', [CommentController::class, 'update']);
-    Route::delete('/topics/{topic}/comments/{id}', [CommentController::class, 'destroy']);
-});
-
 require __DIR__ . '/auth.php';
