@@ -6,7 +6,7 @@ const AppLayout = ({ header, children }) => {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <Navigation user={user} />
+            {/* <Navigation user={user} /> */}
 
             {/* Page Heading */}
             <header className="bg-white shadow">

@@ -4,11 +4,16 @@ import { useAuth } from '@/hooks/auth'
 import { useState, useEffect } from 'react'
 import axios from '@/lib/axios'
 import TopicsTable from '@/components/Customs/TopicsTable'
+import AppLayout from '@/components/Layouts/AppLayout'
 
 export default function Home() {
     const { user, logout } = useAuth({ middleware: 'guest' })
     const [topics, setTopics] = useState(null);
     const [nextPageUrl, setNextPageUrl] = useState(null);
+
+    const handleTopicCreated = () => {
+        fetchTopics('/api/topics');
+    };
 
     useEffect(() => {
         fetchTopics('/api/topics');
@@ -32,11 +37,10 @@ export default function Home() {
     };
 
     return (
-        <>
+        <AppLayout>
             <Head>
                 <title>Laravel</title>
             </Head>
-
             <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 {user ? (
                     <>
@@ -72,7 +76,7 @@ export default function Home() {
             </div>
 
             <div className="p-6 bg-white border-b border-gray-200">
-                {topics ? <TopicsTable topics={topics} /> : <p>Loading...</p>}
+                {topics ? <TopicsTable topics={topics} onTopicCreated={handleTopicCreated} /> : <p>Loading...</p>}
             </div>
 
             <div className="py-12">
@@ -84,6 +88,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </>
+        </AppLayout>
     )
 }

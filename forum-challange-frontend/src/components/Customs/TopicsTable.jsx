@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from '@/lib/axios'
 import Link from 'next/link';
 
-const TopicsTable = ({ topics }) => {
+const TopicsTable = ({ topics, onTopicCreated }) => {
     const [newTopicTitle, setNewTopicTitle] = useState('');
     const [newTopicDescription, setNewTopicDescription] = useState('');
 
@@ -19,6 +19,7 @@ const TopicsTable = ({ topics }) => {
                 console.log(response.data);
                 setNewTopicTitle('');
                 setNewTopicDescription('');
+                onTopicCreated();
             })
             .catch(error => console.log(error));
     };
