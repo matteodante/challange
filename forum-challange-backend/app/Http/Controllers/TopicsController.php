@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Comment;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
 
 class TopicsController extends Controller
 {
 
     public function index()
     {
-        $Topics = Topic::cursorPaginate(20);
+        $Topics = Topic::orderByDesc('id')->cursorPaginate(3);
         return response()->json([
             'status' => 'success',
             'topics' => $Topics,
@@ -28,6 +30,8 @@ class TopicsController extends Controller
         $Topic = Topic::create([
             'title' => $request->title,
             'description' => $request->description,
+            'slug' => Str::slug($request->title),
+            'user_id' => auth()->id(),
         ]);
 
         return response()->json([
@@ -43,7 +47,7 @@ class TopicsController extends Controller
         return response()->json([
             'status' => 'success',
             'topic' => $Topic,
-            'comments' => Comment::where('topic_id', $Topic->id)->cursorPaginate(20),
+            'comments' => Comment::where('topic_id', $Topic->id)->orderByDesc('id')->cursorPaginate(20),
         ]);
     }
 

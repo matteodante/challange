@@ -11,7 +11,7 @@ class Topic extends Model
     use HasFactory;
     use HasUlids;
 
-    protected $fillable = ['title', 'description', 'slug'];
+    protected $fillable = ['title', 'description', 'slug', 'user_id'];
 
     public function user()
     {

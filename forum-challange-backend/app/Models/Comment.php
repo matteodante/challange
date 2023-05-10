@@ -11,7 +11,7 @@ class Comment extends Model
     use HasFactory;
     use HasUlids;
 
-    protected $fillable = ['text'];
+    protected $fillable = ['text', 'user_id', 'topic_id'];
 
     public function user()
     {
