@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TopicsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,8 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::controller(TopicsController::class)->group(function () {
+    Route::get('topics', 'index');
+    Route::post('topic', 'store');
+    Route::get('topic/{id}', 'show');
+    Route::put('topic/{id}', 'update');
+    Route::delete('topic/{id}', 'destroy');
+});
+
 Route::get('/', function () {
     return ['Laravel' => app()->version()];
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
