@@ -6,16 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('topics', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->ulid('id')->primary();
-            $table->string('title');
-            $table->string('slug');
-            $table->text('description');
+            $table->text('text');
+            $table->foreignUlid('topic_id');
             $table->foreignId('user_id');
             $table->timestamps();
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('topics');
+        Schema::dropIfExists('comments');
     }
 };
