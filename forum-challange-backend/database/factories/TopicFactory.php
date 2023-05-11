@@ -19,7 +19,7 @@ class TopicFactory extends Factory
      */
     public function definition(): array
     {
-        $user = User::inRandomOrder()->first()->id; // Ottiene casualmente un user esistente
+        $user = User::inRandomOrder()->firstOrCreate()->id; // Ottiene casualmente un user esistente
         $title = $this->faker->sentence;
         $slug = Str::slug($title, '-');
         return [

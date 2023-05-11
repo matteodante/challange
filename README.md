@@ -5,6 +5,7 @@ Per iniziare con il backend:
 - php artisan migrate --seed
 - php artisan key:generate
 - php artisan jwt:secret
+- php artisan test
 - php artisan serve
 
 Poi inizializzare il frontend
