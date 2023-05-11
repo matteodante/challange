@@ -11,3 +11,5 @@ Poi inizializzare il frontend
  - copiare il .env.example in .env
  - npm i
  - npm run dev
+
+PS. scusate il frontend brutto
