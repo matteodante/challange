@@ -8,9 +8,11 @@ Per iniziare con il backend:
 - php artisan test
 - php artisan serve
 
+
 Poi inizializzare il frontend
  - copiare il .env.example in .env
  - npm i
  - npm run dev
+ - aprire localhost:3000
 
 PS. scusate il frontend brutto
