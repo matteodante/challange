@@ -23,7 +23,19 @@ Route::get('/topics', [TopicsController::class, 'index']);
 Route::get('/topics/{topic}', [TopicsController::class, 'show']);
 
 // Rotte per la creazione dei topic e dei commenti (richiede autenticazione)
-Route::middleware('auth')->group(function () {
+Route::middleware('auth:web')->group(function () {
+    //Rotte topics
+    Route::post('/topics', [TopicsController::class, 'store']);
+    Route::put('/topics/{topic}', [TopicsController::class, 'update']);
+    Route::delete('/topics/{topic}', [TopicsController::class, 'delete']);
+
+    //Rotte comments
+    Route::post('/topics/{topic}/comments', [CommentController::class, 'store']);
+    Route::put('/topics/{topic}/comments/{comment}', [CommentController::class, 'update']);
+    Route::delete('/topics/{topic}/comments/{comment}', [CommentController::class, 'delete']);
+});
+
+Route::middleware('auth:api')->prefix('jwt')->group(function () {
     //Rotte topics
     Route::post('/topics', [TopicsController::class, 'store']);
     Route::put('/topics/{topic}', [TopicsController::class, 'update']);
