@@ -35,12 +35,12 @@ export default function Home() {
             fetchTopics(nextPageUrl);
         }
     };
-
     return (
-        <AppLayout>
+        <>
             <Head>
                 <title>Laravel</title>
             </Head>
+
             <div className="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                 {user ? (
                     <>
@@ -88,6 +88,6 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </AppLayout>
+        </>
     )
 }
