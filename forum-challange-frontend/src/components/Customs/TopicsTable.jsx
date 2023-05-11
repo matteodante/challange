@@ -6,6 +6,7 @@ const TopicsTable = ({ topics, onTopicCreated }) => {
     const [newTopicTitle, setNewTopicTitle] = useState('');
     const [newTopicDescription, setNewTopicDescription] = useState('');
 
+
     const deleteTopic = (id) => {
         axios.delete('/api/topics/' + id)
             .then(response => {
