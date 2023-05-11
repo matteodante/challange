@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DeleteTopicRequest;
+use App\Http\Requests\StoreTopicRequest;
+use App\Http\Requests\UpdateTopicRequest;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use App\Models\Comment;
@@ -20,17 +23,14 @@ class TopicsController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreTopicRequest $request)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
         $Topic = Topic::create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'slug' => Str::slug($request->title),
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'slug' => Str::slug($validated['title']),
             'user_id' => auth()->id(),
         ]);
 
@@ -41,44 +41,38 @@ class TopicsController extends Controller
         ]);
     }
 
-    public function show($id)
+    public function show(Topic $topic)
     {
-        $Topic = Topic::findOrFail($id);
         return response()->json([
             'status' => 'success',
-            'topic' => $Topic,
-            'comments' => Comment::where('topic_id', $Topic->id)->orderByDesc('id')->cursorPaginate(20),
+            'topic' => $topic,
+            'comments' => Comment::where('topic_id', $topic->id)->orderByDesc('id')->cursorPaginate(20),
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateTopicRequest $request, Topic $topic)
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-        ]);
+        $validated = $request->validated();
 
-        $Topic = Topic::findOrFail($id);
-        $Topic->title = $request->title;
-        $Topic->description = $request->description;
-        $Topic->save();
+        $topic->title = $validated['title'];
+        $topic->description = $validated['description'];
+        $topic->save();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Topic updated successfully',
-            'topic' => $Topic,
+            'topic' => $topic,
         ]);
     }
 
-    public function destroy($id)
+    public function delete(DeleteTopicRequest $request, Topic $topic)
     {
-        $Topic = Topic::findOrFail($id);
-        $Topic->delete();
+        $topic->delete();
 
         return response()->json([
             'status' => 'success',
             'message' => 'Topic deleted successfully',
-            'topic' => $Topic,
+            'topic' => $topic,
         ]);
     }
 }

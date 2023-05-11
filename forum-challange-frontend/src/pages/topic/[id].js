@@ -25,6 +25,15 @@ const Topic = () => {
 
     const [newCommentText, setNewCommentText] = useState('');
 
+    const deleteComment = (id) => {
+        axios.delete(`/api/topics/${router.query.id}/comments/` + id)
+            .then(response => {
+                console.log(response.data);
+                setCommentCreated(!commentCreated);
+            })
+            .catch(error => console.log(error));
+    }
+
     const handleNewCommentSubmit = (event) => {
         event.preventDefault();
 
@@ -67,6 +76,7 @@ const Topic = () => {
                                 <div className="flex justify-between mt-2 text-sm text-gray-500">
                                     <p>Created At: {comment.created_at}</p>
                                     <p>Updated At: {comment.updated_at}</p>
+                                    <button onClick={() => deleteComment(comment.id)}>Elimina commento</button>
                                 </div>
                             </div>
                         ))}

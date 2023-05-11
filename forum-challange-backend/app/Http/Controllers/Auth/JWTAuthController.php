@@ -19,7 +19,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
     {
         $credentials = $request->only('email', 'password');
 
-        $token = Auth::attempt($credentials);
+        $token = Auth::guard('api')->attempt($credentials);
         if (!$token) {
             return response()->json([
                 'status' => 'error',
@@ -27,7 +27,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
             ], 401);
         }
 
-        $user = Auth::user();
+        $user = Auth::guard('api')->user();
         return response()->json([
             'status' => 'success',
             'user' => $user,
@@ -52,7 +52,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
             'password' => Hash::make($request->password),
         ]);
 
-        $token = Auth::login($user);
+        $token = Auth::guard('api')->login($user);
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
@@ -66,7 +66,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
 
     public function logout()
     {
-        Auth::logout();
+        Auth::guard('api')->logout();
         return response()->json([
             'status' => 'success',
             'message' => 'Successfully logged out',
@@ -77,7 +77,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
     {
         return response()->json([
             'status' => 'success',
-            'user' => Auth::user(),
+            'user' => Auth::guard('api')->user(),
             'authorisation' => [
                 'token' => Auth::refresh(),
                 'type' => 'bearer',
@@ -89,7 +89,7 @@ class JWTAuthController extends \App\Http\Controllers\Controller
     {
         return response()->json([
             'status' => 'success',
-            'user' => Auth::user(),
+            'user' => Auth::guard('api')->user(),
         ]);
     }
 }

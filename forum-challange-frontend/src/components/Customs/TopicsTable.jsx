@@ -6,6 +6,15 @@ const TopicsTable = ({ topics, onTopicCreated }) => {
     const [newTopicTitle, setNewTopicTitle] = useState('');
     const [newTopicDescription, setNewTopicDescription] = useState('');
 
+    const deleteTopic = (id) => {
+        axios.delete('/api/topics/' + id)
+            .then(response => {
+                console.log(response.data)
+                onTopicCreated();
+            })
+            .catch(error => console.log(error));
+    }
+
     const handleNewTopicSubmit = (event) => {
         event.preventDefault();
 
@@ -68,6 +77,7 @@ const TopicsTable = ({ topics, onTopicCreated }) => {
                     <p className="text-gray-500">Created At: {topic.created_at}</p>
                     <p className="text-gray-500">Updated At: {topic.updated_at}</p>
                     <Link href={`/topic/${topic.id}`}>Vai al Topic</Link>
+                    <button onClick={() => deleteTopic(topic.id)}>Elimina Topic</button>
                 </div>
             ))}
         </div>

@@ -26,13 +26,13 @@ Route::get('/topics/{topic}', [TopicsController::class, 'show']);
 Route::middleware('auth')->group(function () {
     //Rotte topics
     Route::post('/topics', [TopicsController::class, 'store']);
-    Route::put('/topics/{id}', [TopicsController::class, 'update']);
-    Route::delete('/topics/{id}', [TopicsController::class, 'destroy']);
+    Route::put('/topics/{topic}', [TopicsController::class, 'update']);
+    Route::delete('/topics/{topic}', [TopicsController::class, 'delete']);
 
     //Rotte comments
     Route::post('/topics/{topic}/comments', [CommentController::class, 'store']);
-    Route::put('/topics/{topic}/comments/{id}', [CommentController::class, 'update']);
-    Route::delete('/topics/{topic}/comments/{id}', [CommentController::class, 'destroy']);
+    Route::put('/topics/{topic}/comments/{comment}', [CommentController::class, 'update']);
+    Route::delete('/topics/{topic}/comments/{comment}', [CommentController::class, 'delete']);
 });
 
 
